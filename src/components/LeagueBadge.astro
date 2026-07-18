@@ -1,0 +1,42 @@
+---
+interface Props {
+  name: string;
+  teams: number;
+}
+
+const { name, teams } = Astro.props;
+---
+
+<span class="league-badge">
+  <span class="league-badge__name">{name}</span>
+  <span class="league-badge__count">{teams}</span>
+</span>
+
+<style>
+  .league-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.5rem 1rem;
+    background: var(--bg-surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    font-size: 0.9rem;
+    transition: border-color 0.15s ease;
+  }
+  .league-badge:hover {
+    border-color: var(--accent);
+  }
+  .league-badge__name {
+    font-weight: 600;
+    color: var(--text);
+  }
+  .league-badge__count {
+    background: color-mix(in srgb, var(--accent) 15%, transparent);
+    color: var(--accent);
+    padding: 0.1rem 0.5rem;
+    border-radius: 999px;
+    font-size: 0.75rem;
+    font-weight: 700;
+  }
+</style>

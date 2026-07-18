@@ -1,0 +1,53 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+---
+
+<BaseLayout title="About">
+  <section class="section">
+    <div class="container" style="max-width: 720px;">
+      <span class="badge">About Us</span>
+      <h1 style="margin: 1rem 0 1.5rem;">Whiskey Tortilla Foxtrot</h1>
+      <p class="about__text">
+        Whiskey Tortilla Foxtrot is a side project for <a href=https://tonycardone.com>this guy</a> who spends a lot of time doing sports stuff alongside software stuff.
+      </p>
+      <p class="about__text">
+        The flagship app, SeenAt, lets you log jerseys you spot at live sporting events, either in person or from the comfort of the couch. It's a little more advanced than "did you see that dude with the cool jersey", since you can actually log it now.
+      </p>
+      <p class="about__text text-secondary">
+        Or, if you're more of a big number sort of person, you can keep track of the number of times you see someone in a Lionel Messi Inter Miami kit. It's really up to you.
+      </p>
+
+      <div class="about__aside">
+        <p class="about__aside-text">
+          <strong>Whiskey Tortilla Foxtrot.</strong> Life would be better if we threw tortillas in there.
+        </p>
+        <p class="about__aside-sub text-secondary">
+          Building cool sports apps on the side. Because while we can't all do it from 9-5, we sure can think all about it from 9-5.
+        </p>
+      </div>
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  .about__text {
+    font-size: 1.1rem;
+    line-height: 1.7;
+    margin-bottom: 1.25rem;
+  }
+  .about__aside {
+    margin-top: 2.5rem;
+    padding: 1.5rem;
+    border-left: 3px solid var(--accent);
+    background: var(--bg-surface);
+    border-radius: 0 var(--radius) var(--radius) 0;
+  }
+  .about__aside-text {
+    font-size: 1.05rem;
+    margin-bottom: 0.5rem;
+  }
+  .about__aside-sub {
+    font-size: 0.95rem;
+    line-height: 1.5;
+  }
+</style>

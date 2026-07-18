@@ -1,0 +1,223 @@
+/* ===== Fonts (self-hosted) ===== */
+@font-face {
+  font-family: 'Basic';
+  src: url('/fonts/basic/basic-latin-400-normal.woff2') format('woff2');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Urbanist';
+  src: url('/fonts/urbanist/urbanist-latin-wght-normal.woff2') format('woff2');
+  font-weight: 100 900;
+  font-style: normal;
+  font-display: swap;
+}
+
+/* ===== Reset ===== */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+/* ===== Custom Properties — Dark (default) ===== */
+:root {
+  --bg: #0c1210;
+  --bg-surface: #131a16;
+  --border: #26332b;
+  --text: #e8f0ea;
+  --text-secondary: #93a89a;
+  --accent: #00b140;
+  --accent-hover: #00c94d;
+  --accent-text: #ffffff;
+  --code-bg: #18211c;
+  --shadow: rgba(0, 0, 0, 0.4);
+  --radius: 8px;
+  --radius-lg: 16px;
+  --max-width: 1120px;
+  --font-sans: 'Basic', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen,
+    Ubuntu, Cantarell, "Fira Sans", "Droid Sans", "Helvetica Neue", Arial,
+    sans-serif;
+  --font-display: 'Basic', 'Trebuchet MS', 'Lucida Grande', 'Lucida Sans',
+    Arial, sans-serif;
+}
+
+/* ===== Light Mode ===== */
+[data-theme="light"] {
+  --bg: #fbfdfb;
+  --bg-surface: #f1f6f2;
+  --border: #d4e1d7;
+  --text: #131c15;
+  --text-secondary: #5c7060;
+  --accent: #00873a;
+  --accent-hover: #00a340;
+  --accent-text: #ffffff;
+  --code-bg: #eef4ef;
+  --shadow: rgba(20, 40, 25, 0.08);
+}
+
+/* ===== Base ===== */
+html {
+  font-family: var(--font-sans);
+  color: var(--text);
+  background: var(--bg);
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+}
+
+body {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+a {
+  color: var(--accent);
+  text-decoration: none;
+  transition: color 0.15s ease;
+}
+a:hover {
+  color: var(--accent-hover);
+}
+
+img {
+  max-width: 100%;
+  height: auto;
+  display: block;
+}
+
+h1, h2, h3, h4 {
+  line-height: 1.2;
+  font-weight: 700;
+  font-family: var(--font-display);
+}
+
+h1 { font-size: clamp(2rem, 5vw, 3rem); }
+h2 { font-size: clamp(1.5rem, 3.5vw, 2.25rem); }
+h3 { font-family: var(--font-sans); font-size: clamp(1.2rem, 2.5vw, 1.5rem); }
+
+/* ===== Focus ===== */
+:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+}
+
+/* ===== Utility Classes ===== */
+.container {
+  width: 100%;
+  max-width: var(--max-width);
+  margin: 0 auto;
+  padding: 0 1.5rem;
+}
+
+.section {
+  padding: 5rem 0;
+}
+
+.section--alt {
+  background: var(--bg-surface);
+}
+
+.badge {
+  display: inline-block;
+  padding: 0.25rem 0.75rem;
+  border-radius: 999px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  background: color-mix(in srgb, var(--accent) 15%, transparent);
+  color: var(--accent);
+}
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.75rem 1.5rem;
+  border-radius: var(--radius);
+  font-size: 1rem;
+  font-weight: 600;
+  border: none;
+  cursor: pointer;
+  transition: background 0.15s ease, transform 0.1s ease;
+  text-decoration: none;
+}
+
+.btn:active {
+  transform: scale(0.97);
+}
+
+.btn--primary {
+  background: var(--accent);
+  color: var(--accent-text);
+}
+.btn--primary:hover {
+  background: var(--accent-hover);
+  color: var(--accent-text);
+}
+
+.btn--outline {
+  background: transparent;
+  color: var(--accent);
+  border: 2px solid var(--accent);
+}
+.btn--outline:hover {
+  background: var(--accent);
+  color: var(--accent-text);
+}
+
+.btn--disabled {
+  background: var(--border);
+  color: var(--text-secondary);
+  cursor: not-allowed;
+  opacity: 0.7;
+}
+.btn--disabled:hover {
+  background: var(--border);
+  color: var(--text-secondary);
+}
+
+.text-center {
+  text-align: center;
+}
+
+.text-secondary {
+  color: var(--text-secondary);
+}
+
+/* ===== Grid ===== */
+.grid {
+  display: grid;
+  gap: 1.5rem;
+}
+.grid--2 { grid-template-columns: repeat(2, 1fr); }
+.grid--3 { grid-template-columns: repeat(3, 1fr); }
+
+@media (max-width: 768px) {
+  .grid--2, .grid--3 { grid-template-columns: 1fr; }
+}
+
+/* ===== Stitch Divider ===== */
+.divider-stitch {
+  border: none;
+  border-top: 2px dashed color-mix(in srgb, var(--accent) 25%, transparent);
+  margin: 0;
+}
+
+/* ===== Scroll Reveal ===== */
+@media (prefers-reduced-motion: no-preference) {
+  .reveal {
+    opacity: 0;
+    transform: translateY(16px);
+    transition: opacity 0.6s ease, transform 0.6s ease;
+  }
+  .reveal.is-visible {
+    opacity: 1;
+    transform: none;
+  }
+}

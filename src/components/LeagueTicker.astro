@@ -1,0 +1,330 @@
+---
+const leagues = [
+  { name: 'MLB', taglines: ['30 Teams', '162 Games', '6 Divisions'] },
+  { name: 'NBA', taglines: ['30 Teams', '82 Games', '6 Divisions'] },
+  { name: 'NFL', taglines: ['32 Teams', '17 Games', '8 Divisions'] },
+  { name: 'NHL', taglines: ['32 Teams', '82 Games', '8 Divisions'] },
+  { name: 'LOVB', taglines: ['6 Pro Teams', '24 Matches', '1 League'] },
+  { name: 'MLS', taglines: ['30 Pro Teams', '34 Matches', '2 Conferences'] },
+];
+
+const panels = leagues.flatMap((l) => l.taglines.map((t) => ({ league: l.name, tagline: t })));
+
+const promos = [
+  'Download on the App Store',
+  'Track Every Jersey',
+  'Live From the Stands',
+];
+---
+
+<div class="ticker" aria-hidden="true" id="ticker">
+  <div class="ticker__inner">
+    <div class="ticker__section ticker__section--label">
+      <div class="ticker__flip" id="label-flip">
+        <div class="ticker__flip-inner" id="label-flip-inner">
+          <span class="ticker__flip-front" id="label-flip-front">{panels[0].league}</span>
+          <span class="ticker__flip-back" id="label-flip-back">{panels[0].league}</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="ticker__divider"></div>
+
+    <div class="ticker__section ticker__section--panel">
+      <div class="ticker__flip" id="content-flip">
+        <div class="ticker__flip-inner" id="content-flip-inner">
+          <span class="ticker__flip-front" id="content-flip-front">{panels[0].tagline}</span>
+          <span class="ticker__flip-back" id="content-flip-back">{panels[1].tagline}</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="ticker__divider"></div>
+
+    <div class="ticker__section ticker__section--promo">
+      <div class="ticker__flip" id="promo-flip">
+        <div class="ticker__flip-inner" id="promo-flip-inner">
+          <span class="ticker__flip-front" id="promo-flip-front">{promos[0]}</span>
+          <span class="ticker__flip-back" id="promo-flip-back">{promos[1]}</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+  (function () {
+    var leagues = [
+      { name: 'MLB', taglines: ['30 Teams', '162 Games', '6 Divisions'] },
+      { name: 'NBA', taglines: ['30 Teams', '82 Games', '6 Divisions'] },
+      { name: 'NFL', taglines: ['32 Teams', '17 Games', '8 Divisions'] },
+      { name: 'NHL', taglines: ['32 Teams', '82 Games', '8 Divisions'] },
+      { name: 'LOVB', taglines: ['6 Pro Teams', '24 Matches', '1 League'] },
+      { name: 'MLS', taglines: ['30 Pro Teams', '34 Matches', '2 Conferences'] },
+    ];
+
+    var panels = [];
+    for (var i = 0; i < leagues.length; i++) {
+      var l = leagues[i];
+      for (var j = 0; j < l.taglines.length; j++) {
+        panels.push({ league: l.name, tagline: l.taglines[j] });
+      }
+    }
+
+    var promos = [
+      'Download on the App Store',
+      'Track Every Jersey',
+      'Live From the Stands',
+    ];
+
+    var DISPLAY_MS = 4500;
+
+    var reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+    function createFlipper(id) {
+      var inner = document.getElementById(id + '-inner');
+      var front = document.getElementById(id + '-front');
+      var back = document.getElementById(id + '-back');
+      if (!inner || !front || !back) return null;
+
+      return {
+        inner: inner,
+        front: front,
+        back: back,
+
+        init: function (frontText, backText) {
+          this.front.textContent = frontText;
+          this.back.textContent = backText;
+        },
+
+        flip: function (nextBackText) {
+          var self = this;
+          return new Promise(function (resolve) {
+            if (reducedMotion) {
+              self.front.textContent = self.back.textContent;
+              self.back.textContent = nextBackText;
+              resolve();
+              return;
+            }
+
+            function onEnd(e) {
+              if (e.propertyName === 'transform') {
+                self.inner.removeEventListener('transitionend', onEnd);
+                self.front.textContent = self.back.textContent;
+                self.back.textContent = nextBackText;
+                self.inner.style.transition = 'none';
+                self.inner.classList.remove('is-flipped');
+                void self.inner.offsetHeight;
+                self.inner.style.transition = '';
+                resolve();
+              }
+            }
+            self.inner.addEventListener('transitionend', onEnd);
+            self.inner.classList.add('is-flipped');
+          });
+        },
+      };
+    }
+
+    var ticker = document.getElementById('ticker');
+    if (!ticker) return;
+
+    var contentFlipper = createFlipper('content-flip');
+    var labelFlipper = createFlipper('label-flip');
+    var promoFlipper = createFlipper('promo-flip');
+    if (!contentFlipper || !labelFlipper || !promoFlipper) return;
+
+    var panelIdx = 0;
+    var promoIdx = 0;
+
+    contentFlipper.init(panels[0].tagline, panels[1].tagline);
+    labelFlipper.init(panels[0].league, panels[0].league);
+    promoFlipper.init(promos[0], promos[1]);
+
+    function nextPanelIndex(idx) {
+      return (idx + 1) % panels.length;
+    }
+
+    function scheduleNext() {
+      setTimeout(tick, DISPLAY_MS);
+    }
+
+    function promoFade(nextBackText) {
+      return new Promise(function (resolve) {
+        if (reducedMotion) {
+          promoFlipper.front.textContent = promoFlipper.back.textContent;
+          promoFlipper.back.textContent = nextBackText;
+          resolve();
+          return;
+        }
+
+        var inner = promoFlipper.inner;
+        var duration = 500;
+        inner.style.transition = 'opacity ' + duration + 'ms ease';
+        inner.style.opacity = '0';
+
+        function onFadeOut(e) {
+          if (e.propertyName === 'opacity') {
+            inner.removeEventListener('transitionend', onFadeOut);
+            promoFlipper.front.textContent = promoFlipper.back.textContent;
+            promoFlipper.back.textContent = nextBackText;
+            inner.style.opacity = '1';
+
+            function onFadeIn(e2) {
+              if (e2.propertyName === 'opacity') {
+                inner.removeEventListener('transitionend', onFadeIn);
+                inner.style.transition = '';
+                inner.style.opacity = '';
+                resolve();
+              }
+            }
+            inner.addEventListener('transitionend', onFadeIn);
+          }
+        }
+        inner.addEventListener('transitionend', onFadeOut);
+      });
+    }
+
+    function promoLoop() {
+      var nextPromoIdx = (promoIdx + 1) % promos.length;
+      var afterNext = promos[(nextPromoIdx + 1) % promos.length];
+
+      promoFade(afterNext).then(function () {
+        promoIdx = nextPromoIdx;
+        setTimeout(promoLoop, 60000);
+      });
+    }
+
+    setTimeout(promoLoop, 60000);
+
+    function tick() {
+      var nextIdx = nextPanelIndex(panelIdx);
+      var nextPanel = panels[nextIdx];
+      var currentPanel = panels[panelIdx];
+      var leagueChanged = currentPanel.league !== nextPanel.league;
+
+      var taglineAfterNext = panels[nextPanelIndex(nextIdx)].tagline;
+
+      if (leagueChanged) {
+        labelFlipper.back.textContent = nextPanel.league;
+      }
+
+      var tasks = [contentFlipper.flip(taglineAfterNext)];
+      if (leagueChanged) {
+        tasks.push(labelFlipper.flip(nextPanel.league));
+      }
+
+      Promise.all(tasks).then(function () {
+        panelIdx = nextIdx;
+        scheduleNext();
+      });
+    }
+
+    setTimeout(tick, DISPLAY_MS);
+  })();
+</script>
+
+<style>
+  .ticker {
+    background: color-mix(in srgb, var(--bg) 85%, black);
+    border-top: 1px solid var(--border);
+    border-bottom: 1px solid var(--border);
+    padding: 0.7rem 0;
+    font-size: 0.85rem;
+    line-height: 1.4;
+  }
+
+  .ticker__inner {
+    max-width: var(--max-width);
+    margin: 0 auto;
+    padding: 0 1.5rem;
+    display: flex;
+    align-items: center;
+    gap: 0;
+  }
+
+  .ticker__section {
+    display: flex;
+    align-items: center;
+  }
+
+  .ticker__section--label {
+    flex: 0 0 auto;
+    margin-right: 0.75rem;
+  }
+
+  .ticker__section--panel {
+    flex: 1 1 auto;
+    min-width: 0;
+  }
+
+  .ticker__section--promo {
+    flex: 0 0 auto;
+    margin-left: 0.75rem;
+    text-align: right;
+    opacity: 0.65;
+    font-size: 0.78rem;
+  }
+
+  .ticker__label {
+    background: var(--accent);
+    color: var(--bg);
+    font-weight: 700;
+    font-size: 0.85rem;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    padding: 0.15rem 0.6rem;
+    border-radius: 3px;
+    line-height: 1.6;
+  }
+
+  .ticker__divider {
+    flex: 0 0 auto;
+    width: 1px;
+    height: 1em;
+    background: var(--text);
+    opacity: 0.15;
+  }
+
+  .ticker__divider + .ticker__section {
+    padding-left: 0.75rem;
+  }
+  .ticker__section + .ticker__divider {
+    margin-left: 0;
+  }
+
+  .ticker__flip {
+    perspective: 300px;
+  }
+
+  .ticker__flip-inner {
+    transform-style: preserve-3d;
+    transition: transform 0.4s ease;
+    position: relative;
+  }
+
+  .ticker__flip-inner.is-flipped {
+    transform: rotateX(-180deg);
+  }
+
+  .ticker__flip-front,
+  .ticker__flip-back {
+    backface-visibility: hidden;
+    display: block;
+  }
+
+  .ticker__flip-back {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    transform: rotateX(180deg);
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .ticker__flip-inner {
+      transition: none !important;
+    }
+  }
+</style>

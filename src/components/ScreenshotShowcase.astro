@@ -1,0 +1,51 @@
+---
+import PhoneFrame from './PhoneFrame.astro';
+
+interface Screenshot {
+  src: string;
+  alt: string;
+  caption: string;
+}
+
+interface Props {
+  screenshots: Screenshot[];
+}
+
+const { screenshots } = Astro.props;
+---
+
+<div class="showcase">
+  {screenshots.map(({ src, alt, caption }) => (
+    <figure class="showcase__item">
+      <PhoneFrame {src} {alt} />
+      <figcaption class="showcase__caption">{caption}</figcaption>
+    </figure>
+  ))}
+</div>
+
+<style>
+  .showcase {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 2rem;
+    justify-items: center;
+  }
+  .showcase__item {
+    text-align: center;
+  }
+  .showcase__caption {
+    margin-top: 0.75rem;
+    font-size: 0.85rem;
+    color: var(--text-secondary);
+  }
+  @media (max-width: 768px) {
+    .showcase {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+  @media (max-width: 480px) {
+    .showcase {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>

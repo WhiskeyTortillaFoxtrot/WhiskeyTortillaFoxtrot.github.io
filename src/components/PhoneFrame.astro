@@ -1,0 +1,57 @@
+---
+interface Props {
+  src: string;
+  alt: string;
+  loading?: 'lazy' | 'eager';
+}
+
+const { src, alt, loading = 'lazy' } = Astro.props;
+---
+
+<div class="phone-frame">
+  <div class="phone-frame__notch"></div>
+  <img {src} {alt} {loading} class="phone-frame__img" />
+</div>
+
+<style>
+  .phone-frame {
+    position: relative;
+    background: #1a1a1e;
+    border-radius: 2.5rem;
+    padding: 0.75rem;
+    box-shadow:
+      0 0 0 2px rgba(255, 255, 255, 0.08),
+      0 20px 60px var(--shadow),
+      inset 0 1px 0 rgba(255, 255, 255, 0.06);
+    display: inline-block;
+  }
+  .phone-frame__notch {
+    position: absolute;
+    top: 0.75rem;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 7rem;
+    height: 1.6rem;
+    background: #1a1a1e;
+    border-radius: 0 0 1rem 1rem;
+    z-index: 1;
+  }
+  .phone-frame__notch::after {
+    content: '';
+    position: absolute;
+    top: 0.5rem;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 0.5rem;
+    height: 0.5rem;
+    background: #2a2a2e;
+    border-radius: 50%;
+  }
+  .phone-frame__img {
+    display: block;
+    width: 100%;
+    max-width: 260px;
+    height: auto;
+    border-radius: 1.8rem;
+  }
+</style>

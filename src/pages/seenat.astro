@@ -1,0 +1,221 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import ScreenshotShowcase from '../components/ScreenshotShowcase.astro';
+import FeatureCard from '../components/FeatureCard.astro';
+import LeagueBadge from '../components/LeagueBadge.astro';
+import ComingSoonButton from '../components/ComingSoonButton.astro';
+
+const base = `${import.meta.env.BASE_URL.replace(/\/$/, '')}/`;
+const screenshots = [
+  { src: `${base}screenshots/HomeView.png`, alt: 'Home screen', caption: 'Home' },
+  { src: `${base}screenshots/LiveTrackingView.png`, alt: 'Live tracking', caption: 'Live Tracking' },
+  { src: `${base}screenshots/EventSummaryView.png`, alt: 'Event summary', caption: 'Event Summary' },
+  { src: `${base}screenshots/StatsView.png`, alt: 'Stats dashboard', caption: 'Stats' },
+  { src: `${base}screenshots/SettingsView.png`, alt: 'Settings', caption: 'Settings' },
+  { src: `${base}screenshots/FavoriteTeamsView.png`, alt: 'Favorite teams', caption: 'Favorite Teams' },
+];
+
+const features = [
+  { title: 'Live Activities', description: 'Track jerseys in real time with Dynamic Island and Lock Screen support.', icon: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>' },
+  { title: 'At Stadium or On TV', description: 'Choose your watch location for accurate logging.', icon: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>' },
+  { title: 'Photo Gallery', description: 'Capture jersey sightings with photos and player captions.', icon: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/><circle cx="12" cy="13" r="4"/></svg>' },
+  { title: 'Search', description: 'Find games and sightings by team or player name.', icon: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>' },
+  { title: 'Deep Linking', description: 'Open directly to live tracking via seenat:// URLs.', icon: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg>' },
+  { title: 'CSV Export', description: 'Export all your sighting data for your own analysis.', icon: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>' },
+  { title: 'Upcoming Events', description: 'See your future games at a glance.', icon: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>' },
+  { title: 'Venue Photos', description: 'Stadium and arena photos for each event.', icon: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="2" width="16" height="20" rx="2" ry="2"/><line x1="4" y1="22" x2="20" y2="22"/><line x1="12" y1="18" x2="12" y2="22"/><line x1="8" y1="6" x2="8" y2="6.01"/><line x1="16" y1="6" x2="16" y2="6.01"/><line x1="8" y1="10" x2="8" y2="10.01"/><line x1="16" y1="10" x2="16" y2="10.01"/></svg>' },
+];
+
+const leagues = [
+  { name: 'MLB', teams: 30 },
+  { name: 'NBA', teams: 30 },
+  { name: 'NFL', teams: 32 },
+  { name: 'NHL', teams: 32 },
+  { name: 'LOVB', teams: 6 },
+  { name: 'MLS', teams: 28 },
+];
+---
+
+<BaseLayout title="SeenAt" description="Track every jersey you've Seen At the game.">
+<div class="seenat-page">
+  <!-- Hero -->
+  <section class="hero">
+    <div class="container text-center">
+      <span class="badge">iOS App</span>
+      <h1>SeenAt</h1>
+      <p class="app-hero__tagline">Track every jersey you've Seen At the game.</p>
+      <p class="app-hero__desc text-secondary">
+        Log jerseys you spot at live sporting events, track which teams and players you see
+        most, and relive your game-day memories through photos and stats.
+      </p>
+      <div style="margin-top: 2rem;">
+        <ComingSoonButton />
+      </div>
+    </div>
+  </section>
+
+  <!-- Screenshots -->
+  <section class="section section--alt reveal">
+    <div class="container">
+      <h2 class="text-center" style="margin-bottom: 2.5rem;">See It in Action</h2>
+      <ScreenshotShowcase screenshots={screenshots} />
+    </div>
+  </section>
+
+  <!-- Features -->
+  <section class="section reveal">
+    <div class="container">
+      <h2 class="text-center" style="margin-bottom: 2.5rem;">The Lineup</h2>
+      <div class="grid grid--2">
+        {features.map(({ title, description, icon }) => (
+          <FeatureCard title={title} description={description} icon={icon} />
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- Leagues -->
+  <section class="section section--alt reveal">
+    <div class="container text-center">
+      <h2 style="margin-bottom: 1rem;">Supported Leagues</h2>
+      <p class="text-secondary" style="margin-bottom: 2rem;">
+        158 built-in teams across 6 leagues, with live schedule data for MLB, NBA, NFL, and NHL.
+      </p>
+      <div class="leagues-grid">
+        {leagues.map(({ name, teams }) => (
+          <LeagueBadge name={name} teams={teams} />
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- Tech Stack -->
+  <section class="section reveal">
+    <div class="container">
+      <h2 class="text-center" style="margin-bottom: 2.5rem;">Scouting Report</h2>
+      <div class="grid grid--2">
+        <div class="tech-item">
+          <div class="tech-item__icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg></div>
+          <h3 class="tech-item__name">Swift 6</h3>
+          <p class="tech-item__desc">Modern concurrency and strict type safety throughout the codebase.</p>
+        </div>
+        <div class="tech-item">
+          <div class="tech-item__icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg></div>
+          <h3 class="tech-item__name">SwiftUI</h3>
+          <p class="tech-item__desc">Declarative, composable UI for every screen with fluid animations.</p>
+        </div>
+        <div class="tech-item">
+          <div class="tech-item__icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><ellipse cx="12" cy="5" rx="9" ry="3"/><path d="M21 12c0 1.66-4 3-9 3s-9-1.34-9-3"/><path d="M3 5v14c0 1.66 4 3 9 3s9-1.34 9-3V5"/></svg></div>
+          <h3 class="tech-item__name">SwiftData</h3>
+          <p class="tech-item__desc">On-device persistence with <code>@Model</code>, predicates, and relationships — no Core Data boilerplate.</p>
+        </div>
+        <div class="tech-item">
+          <div class="tech-item__icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg></div>
+          <h3 class="tech-item__name">ActivityKit</h3>
+          <p class="tech-item__desc">Live Activities on Dynamic Island and Lock Screen for real-time in-game tracking.</p>
+        </div>
+        <div class="tech-item">
+          <div class="tech-item__icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg></div>
+          <h3 class="tech-item__name">Swift Charts</h3>
+          <p class="tech-item__desc">Interactive bar and pie charts for team and league breakdowns.</p>
+        </div>
+        <div class="tech-item">
+          <div class="tech-item__icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06A1.65 1.65 0 0 0 4.68 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06A1.65 1.65 0 0 0 9 4.68a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg></div>
+          <h3 class="tech-item__name">XcodeGen</h3>
+          <p class="tech-item__desc">Declarative project generation from <code>project.yml</code> — no checked-in <code>.xcodeproj</code>.</p>
+        </div>
+        <div class="tech-item">
+          <div class="tech-item__icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="4 17 10 11 4 5"/><line x1="12" y1="19" x2="20" y2="19"/></svg></div>
+          <h3 class="tech-item__name">Built With OpenCode</h3>
+          <p class="tech-item__desc">This project was developed with OpenCode, an AI-powered CLI for software engineering.</p>
+        </div>
+        <div class="tech-item">
+          <div class="tech-item__icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="6" y1="3" x2="6" y2="15"/><circle cx="18" cy="6" r="3"/><circle cx="6" cy="18" r="3"/><path d="M18 9a9 9 0 0 1-9 9"/></svg></div>
+          <h3 class="tech-item__name">Open Source</h3>
+          <p class="tech-item__desc">Available on GitHub under the Mozilla Public License 2.0 — free to explore, fork, and contribute.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <hr class="divider-stitch" />
+
+  <!-- CTA -->
+  <section class="section section--alt">
+    <div class="container text-center">
+      <h2>Coming Soon</h2>
+      <p class="text-secondary" style="margin: 1rem 0 2rem;">
+        SeenAt is in development and will be available on the App Store.
+      </p>
+      <ComingSoonButton />
+    </div>
+  </section>
+</div>
+</BaseLayout>
+
+<style>
+  .seenat-page {
+    font-family: 'Urbanist', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen,
+      Ubuntu, Cantarell, "Fira Sans", "Droid Sans", "Helvetica Neue", Arial,
+      sans-serif;
+  }
+  .hero {
+    padding: 6rem 0 3rem;
+  }
+  .app-hero__tagline {
+    font-size: clamp(1.1rem, 2.5vw, 1.4rem);
+    color: var(--text-secondary);
+    margin: 1rem 0;
+  }
+  .app-hero__desc {
+    max-width: 600px;
+    margin: 0 auto;
+  }
+  .leagues-grid {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 1rem;
+  }
+  .tech-item {
+    padding: 1.25rem 1.5rem;
+    background: var(--bg-surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-lg);
+    transition: border-color 0.15s ease;
+  }
+  .tech-item:hover {
+    border-color: var(--accent);
+  }
+  .tech-item__icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 2.25rem;
+    height: 2.25rem;
+    border-radius: var(--radius);
+    background: color-mix(in srgb, var(--accent) 10%, transparent);
+    margin-bottom: 0.75rem;
+    color: var(--accent);
+  }
+  .tech-item__icon svg {
+    width: 1.15rem;
+    height: 1.15rem;
+  }
+  .tech-item__name {
+    font-size: 1.05rem;
+    margin-bottom: 0.35rem;
+    color: var(--text);
+  }
+  .tech-item__desc {
+    font-size: 0.875rem;
+    color: var(--text-secondary);
+    line-height: 1.5;
+  }
+  .tech-item__desc code {
+    background: var(--code-bg);
+    padding: 0.1em 0.35em;
+    border-radius: 4px;
+    font-size: 0.82em;
+  }
+</style>

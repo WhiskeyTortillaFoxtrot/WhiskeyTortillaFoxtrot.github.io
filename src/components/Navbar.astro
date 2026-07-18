@@ -1,0 +1,168 @@
+---
+import ThemeToggle from './ThemeToggle.astro';
+
+const base = `${import.meta.env.BASE_URL.replace(/\/$/, '')}/`;
+const navLinks = [
+  { href: base, label: 'Home' },
+  { href: `${base}seenat/`, label: 'SeenAt' },
+  { href: `${base}about/`, label: 'About' },
+  { href: `${base}contact/`, label: 'Contact' },
+];
+
+const currentPath = Astro.url.pathname;
+---
+
+<header class="navbar">
+  <div class="container navbar__inner">
+    <a href={base} class="navbar__brand">WTF
+      <span class="tortilla tortilla--1" aria-hidden="true"></span>
+      <span class="tortilla tortilla--2" aria-hidden="true"></span>
+      <span class="tortilla tortilla--3" aria-hidden="true"></span>
+    </a>
+    <nav class="navbar__links">
+      {navLinks.map(({ href, label }) => (
+        <a
+          href={href}
+          class:list={['navbar__link', { 'navbar__link--active': currentPath === href || currentPath === href.slice(0, -1) }]}
+        >
+          {label}
+        </a>
+      ))}
+    </nav>
+    <ThemeToggle />
+  </div>
+</header>
+
+<style>
+  .navbar {
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    background: color-mix(in srgb, var(--bg) 85%, transparent);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border-bottom: 1px solid var(--border);
+  }
+  .navbar__inner {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    height: 4rem;
+  }
+  .navbar__brand {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    font-size: 1.25rem;
+    font-weight: 800;
+    color: var(--accent);
+    letter-spacing: -0.02em;
+  }
+  .navbar__brand:hover {
+    color: var(--accent-hover);
+  }
+
+  .tortilla {
+    position: absolute;
+    width: 20px;
+    height: 16px;
+    border-radius: 50%;
+    background: radial-gradient(circle at 35% 35%, #F5DEB3, #DEB887);
+    box-shadow:
+      inset 0 0 2px 1px rgba(139, 105, 20, 0.2),
+      3px 2px 4px rgba(0, 0, 0, 0.15);
+    opacity: 0;
+    pointer-events: none;
+  }
+  .tortilla::after {
+    content: '';
+    position: absolute;
+    top: 30%;
+    left: 25%;
+    width: 50%;
+    height: 40%;
+    background: radial-gradient(circle, rgba(180, 140, 60, 0.3) 0%, transparent 70%);
+    border-radius: 50%;
+  }
+
+  .tortilla--1 {
+    top: -2px;
+    left: -10px;
+    animation: tortilla-toss 5s ease-in-out 0s infinite;
+  }
+  .tortilla--2 {
+    top: 4px;
+    right: -14px;
+    width: 16px;
+    height: 13px;
+    animation: tortilla-toss 5s ease-in-out 1.8s infinite;
+  }
+  .tortilla--3 {
+    top: -6px;
+    right: 6px;
+    width: 14px;
+    height: 11px;
+    animation: tortilla-toss 5s ease-in-out 3.4s infinite;
+  }
+
+  @keyframes tortilla-toss {
+    0% {
+      opacity: 0;
+      transform: translateY(8px) rotate(0deg) scale(0.6);
+    }
+    10% {
+      opacity: 0.9;
+      transform: translateY(0) rotate(15deg) scale(1);
+    }
+    40% {
+      opacity: 0.85;
+      transform: translateY(-30px) rotate(120deg) scale(1);
+    }
+    60% {
+      opacity: 0.6;
+      transform: translateY(-24px) rotate(200deg) scale(0.95);
+    }
+    100% {
+      opacity: 0;
+      transform: translateY(-40px) rotate(340deg) scale(0.7);
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .tortilla {
+      animation: none;
+      display: none;
+    }
+  }
+  .tortilla--done {
+    display: none;
+  }
+  .navbar__links {
+    display: flex;
+    gap: 2rem;
+  }
+  .navbar__link {
+    font-size: 0.95rem;
+    font-weight: 500;
+    color: var(--text-secondary);
+    transition: color 0.15s ease;
+  }
+  .navbar__link:hover,
+  .navbar__link--active {
+    color: var(--text);
+  }
+  @media (max-width: 600px) {
+    .navbar__links {
+      gap: 1rem;
+    }
+    .navbar__link {
+      font-size: 0.85rem;
+    }
+  }
+</style>
+
+<script>
+  setTimeout(() => {
+    document.querySelectorAll('.tortilla').forEach(el => el.classList.add('tortilla--done'));
+  }, 10000);
+</script>
