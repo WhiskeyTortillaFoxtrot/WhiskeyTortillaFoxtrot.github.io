@@ -2,7 +2,7 @@ import { defineConfig } from 'astro/config';
 import sitemap from '@astrojs/sitemap';
 
 export default defineConfig({
-  site: 'https://thetonyweapon.github.io',
+  site: 'https://whiskeytortillafoxtrot.github.io',
   base: '/wtfdev-site',
   integrations: [sitemap()],
 });
