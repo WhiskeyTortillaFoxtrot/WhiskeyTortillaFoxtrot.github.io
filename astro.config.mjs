@@ -3,6 +3,6 @@ import sitemap from '@astrojs/sitemap';
 
 export default defineConfig({
   site: 'https://whiskeytortillafoxtrot.github.io',
-  base: '/wtfdev-site',
+  base: '/',
   integrations: [sitemap()],
 });

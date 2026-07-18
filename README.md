@@ -55,6 +55,7 @@ npm run preview
 │   └── styles/
 │       └── global.css      # Theme variables, reset, utilities
 ├── .github/workflows/
+│   ├── ci.yml              # Pull request build verification
 │   └── deploy.yml          # GitHub Pages deployment
 ├── astro.config.mjs
 ├── package.json
@@ -67,14 +68,14 @@ Screenshots are stored in `public/screenshots/`. To update them, replace the PNG
 
 ## Deployment
 
-The site deploys automatically to GitHub Pages via GitHub Actions when changes are pushed to `main`.
+The site deploys automatically to `https://whiskeytortillafoxtrot.github.io/` via GitHub Actions when changes are merged to `main`.
 
 To configure for your own GitHub Pages URL, update `astro.config.mjs`:
 
 ```js
 export default defineConfig({
   site: 'https://<username>.github.io',
-  base: '/<repo-name>',
+   base: '/',
 });
 ```
 
@@ -86,4 +87,4 @@ export default defineConfig({
 
 ## License
 
-Proprietary — Whiskey Tortilla Foxtrot
+Mozilla Public License 2.0 — see [LICENSE](LICENSE).

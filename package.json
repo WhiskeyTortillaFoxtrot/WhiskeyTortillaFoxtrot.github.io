@@ -2,6 +2,7 @@
   "name": "wtfdev-site",
   "type": "module",
   "version": "0.1.0",
+  "license": "MPL-2.0",
   "scripts": {
     "dev": "astro dev",
     "build": "astro build",
@@ -9,6 +10,6 @@
   },
   "dependencies": {
     "@astrojs/sitemap": "^3.7.3",
-    "astro": "^5.12.0"
+    "astro": "^7.1.1"
   }
 }
