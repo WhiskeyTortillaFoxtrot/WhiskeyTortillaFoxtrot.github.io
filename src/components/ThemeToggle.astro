@@ -42,15 +42,17 @@
 </button>
 
 <script>
-  (function() {
+  (function () {
     var toggle = document.getElementById('theme-toggle');
     if (!toggle) return;
-    toggle.addEventListener('click', function() {
+    toggle.addEventListener('click', function () {
       var html = document.documentElement;
       var current = html.getAttribute('data-theme');
       var next = current === 'dark' ? 'light' : 'dark';
       html.setAttribute('data-theme', next);
-      try { localStorage.setItem('theme', next); } catch(e) {}
+      try {
+        localStorage.setItem('theme', next);
+      } catch (e) {}
     });
   })();
 </script>
