@@ -75,7 +75,7 @@ To configure for your own GitHub Pages URL, update `astro.config.mjs`:
 ```js
 export default defineConfig({
   site: 'https://<username>.github.io',
-   base: '/',
+  base: '/',
 });
 ```
 

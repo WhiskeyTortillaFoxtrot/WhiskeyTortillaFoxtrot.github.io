@@ -15,12 +15,14 @@ const { screenshots } = Astro.props;
 ---
 
 <div class="showcase">
-  {screenshots.map(({ src, alt, caption }) => (
-    <figure class="showcase__item">
-      <PhoneFrame {src} {alt} />
-      <figcaption class="showcase__caption">{caption}</figcaption>
-    </figure>
-  ))}
+  {
+    screenshots.map(({ src, alt, caption }) => (
+      <figure class="showcase__item">
+        <PhoneFrame {src} {alt} />
+        <figcaption class="showcase__caption">{caption}</figcaption>
+      </figure>
+    ))
+  }
 </div>
 
 <style>
