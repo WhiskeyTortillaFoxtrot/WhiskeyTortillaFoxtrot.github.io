@@ -52,30 +52,13 @@ const promos = [
   </div>
 </div>
 
+<script id="ticker-data" type="application/json" set:html={JSON.stringify({ panels, promos })}></script>
+
 <script>
   (function () {
-    var leagues = [
-      { name: 'MLB', taglines: ['30 Teams', '162 Games', '6 Divisions'] },
-      { name: 'NBA', taglines: ['30 Teams', '82 Games', '6 Divisions'] },
-      { name: 'NFL', taglines: ['32 Teams', '17 Games', '8 Divisions'] },
-      { name: 'NHL', taglines: ['32 Teams', '82 Games', '8 Divisions'] },
-      { name: 'LOVB', taglines: ['6 Pro Teams', '24 Matches', '1 League'] },
-      { name: 'MLS', taglines: ['30 Pro Teams', '34 Matches', '2 Conferences'] },
-    ];
-
-    var panels = [];
-    for (var i = 0; i < leagues.length; i++) {
-      var l = leagues[i];
-      for (var j = 0; j < l.taglines.length; j++) {
-        panels.push({ league: l.name, tagline: l.taglines[j] });
-      }
-    }
-
-    var promos = [
-      'Download on the App Store',
-      'Track Every Jersey',
-      'Live From the Stands',
-    ];
+    var tickerData = JSON.parse(document.getElementById('ticker-data').textContent);
+    var panels = tickerData.panels;
+    var promos = tickerData.promos;
 
     var DISPLAY_MS = 4500;
 
