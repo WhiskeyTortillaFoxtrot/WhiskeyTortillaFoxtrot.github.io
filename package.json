@@ -23,7 +23,7 @@
     "@playwright/test": "^1.61.1",
     "@typescript-eslint/parser": "^8.65.0",
     "astro-link-validator": "^1.1.1",
-    "eslint": "^10.0.0",
+    "eslint": "^10.8.0",
     "eslint-config-prettier": "^10.1.8",
     "eslint-plugin-astro": "^2.1.1",
     "prettier": "^3.9.5",
